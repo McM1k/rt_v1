@@ -6,7 +6,7 @@
 /*   By: gboudrie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/04 16:14:37 by gboudrie          #+#    #+#             */
-/*   Updated: 2016/11/11 13:12:31 by gboudrie         ###   ########.fr       */
+/*   Updated: 2016/11/15 15:11:10 by gboudrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,40 @@
 # define RTV1_H
 # include "mlx.h"
 # include "../libft/libft.h"
+# define SIZE_X 1000
+# define SIZE_Y 1000
 
 typedef struct	s_dot_3d
 {
-	int			x;
-	int			y;
-	int			z;
-}				t_dot_3d
+	double		x;
+	double		y;
+	double		z;
+}				t_dot_3d;
+
+typedef struct	s_ray
+{
+	t_dot_3d	pos;
+	t_dot_3d	vect;
+}				t_ray;
 
 typedef struct	s_camera
 {
+	char		*name;
 	t_dot_3d	pos;
 	t_dot_3d	vect;
 }				t_camera;
 
 typedef struct	s_sphere
 {
+	char		*name;
 	t_dot_3d	pos;
-	int			siz;
+	double		siz;
 	int			col;
 }				t_sphere;
 
 typedef struct	s_plane
 {
+	char		*name;
 	t_dot_3d	pos;
 	t_dot_3d	vect;
 	int			col;
@@ -59,4 +70,5 @@ int				set_sph(int fd, t_env *env);
 int				set_cam(int fd, t_env *env);
 t_dot_3d		coor_parse(char **str, char *str2);
 int				color_parse(char **str);
+double			value_parse(char **str, char *str2);
 #endif
