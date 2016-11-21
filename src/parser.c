@@ -6,12 +6,12 @@
 /*   By: gboudrie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/04 16:45:26 by gboudrie          #+#    #+#             */
-/*   Updated: 2016/11/15 13:47:11 by gboudrie         ###   ########.fr       */
+/*   Updated: 2016/11/21 17:18:36 by gboudrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtv1.h"
-#include <unistd.h>
+#include <fcntl.h>
 
 double		value_parse(char **str, char *str2)
 {
@@ -36,10 +36,10 @@ int			color_parse(char **str)
 		if (!(tab = ft_strsplit((*str) + 8, ' ')))
 			return (0);
 		tmp = (char *)(&color);
-		tmp + 1 = ft_atoi(tab[0]);
-		tmp + 2 = ft_atoi(tab[1]);
-		tmp + 3 = ft_atoi(tab[2]);
-		ft_tabdel(&tab);
+		*(tmp + 1) = ft_atoi(tab[0]);
+		*(tmp + 2) = ft_atoi(tab[1]);
+		*(tmp + 3) = ft_atoi(tab[2]);
+		ft_tabdel((void ***)&tab);
 	}
 	return (color);
 }
@@ -55,11 +55,11 @@ t_dot_3d	coor_parse(char **str, char *str2)
 	if (ft_strcmp(str2, *str) == 0)
 	{
 		if (!(tab = ft_strsplit((*str) + ft_strlen(str2), ' ')))
-			return (0);
+			return (dot);
 		dot.x = (double)ft_atoi(tab[0]);
 		dot.y = (double)ft_atoi(tab[1]);
 		dot.z = (double)ft_atoi(tab[2]);
-		ft_tabdel(&tab);
+		ft_tabdel((void ***)&tab);
 	}
 	return (dot);
 }
@@ -74,11 +74,13 @@ int			parser(char *arg, t_env *env)
 	while (get_next_line(fd, &str) > 0)
 	{
 		if (strcmp("camera{", str) == 0)
+		{
 			if (!(set_cam(fd, env)))
 				return (0);
 		if (strcmp("sphere{", str) == 0)
 			if (!(set_cam(fd, env)))
 				return (0);
+		}
 		else
 			return (0);
 		ft_strdel(&str);

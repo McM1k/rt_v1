@@ -6,7 +6,7 @@
 /*   By: gboudrie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/04 16:14:37 by gboudrie          #+#    #+#             */
-/*   Updated: 2016/11/15 15:11:10 by gboudrie         ###   ########.fr       */
+/*   Updated: 2016/11/21 17:08:59 by gboudrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "../libft/libft.h"
 # define SIZE_X 1000
 # define SIZE_Y 1000
+# define PI 3.14159265358979323846
 
 typedef struct	s_dot_3d
 {
@@ -71,4 +72,5 @@ int				set_cam(int fd, t_env *env);
 t_dot_3d		coor_parse(char **str, char *str2);
 int				color_parse(char **str);
 double			value_parse(char **str, char *str2);
+void			raycast(t_env env);
 #endif

@@ -6,7 +6,7 @@
 #    By: gboudrie <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/06/08 21:26:14 by gboudrie          #+#    #+#              #
-#    Updated: 2016/11/04 18:47:12 by gboudrie         ###   ########.fr        #
+#    Updated: 2016/11/21 17:12:25 by gboudrie         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 NAME = rtv1
@@ -21,7 +21,7 @@ HEADER = src/rtv1.h
 
 FLAGS = -Wall -Wextra -Werror
 
-SOURCES = src/main.c
+SOURCES = src/main.c src/parser.c src/raytracer.c src/set_structs.c
 
 OBJS = $(SOURCES:.c=.o)
 
