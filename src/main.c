@@ -6,7 +6,7 @@
 /*   By: gboudrie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/04 15:38:33 by gboudrie          #+#    #+#             */
-/*   Updated: 2016/11/21 17:13:51 by gboudrie         ###   ########.fr       */
+/*   Updated: 2016/12/02 17:20:28 by gboudrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int		main(int ac, char **av)
 		mlx_put_image_to_window(env.mlx, env.win, env.ig, 0, 0);
 //		mlx_hook(env.win, 2, 0, key_funct, &env);
 //		mlx_hook(env.win, 17, 0, destroy_funct, &env);
-//		mlx_loop(env.mlx);
+		mlx_loop(env.mlx);
 	}
 	else
 	{

@@ -6,7 +6,7 @@
 /*   By: gboudrie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/04 16:45:26 by gboudrie          #+#    #+#             */
-/*   Updated: 2016/11/21 17:18:36 by gboudrie         ###   ########.fr       */
+/*   Updated: 2016/12/02 12:12:42 by gboudrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 double		value_parse(char **str, char *str2)
 {
-	char		**tab;
 	int			value;
 
 	value = 0;
@@ -75,10 +74,12 @@ int			parser(char *arg, t_env *env)
 	{
 		if (strcmp("camera{", str) == 0)
 		{
-			if (!(set_cam(fd, env)))
+			if (!(set_cam(&fd, env)))
 				return (0);
-		if (strcmp("sphere{", str) == 0)
-			if (!(set_cam(fd, env)))
+		}
+		else if (strcmp("sphere{", str) == 0)
+		{
+			if (!(set_sph(&fd, env)))
 				return (0);
 		}
 		else

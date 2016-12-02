@@ -6,7 +6,7 @@
 /*   By: gboudrie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/04 16:14:37 by gboudrie          #+#    #+#             */
-/*   Updated: 2016/11/21 17:08:59 by gboudrie         ###   ########.fr       */
+/*   Updated: 2016/12/02 11:38:05 by gboudrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,16 @@ typedef struct	s_dot_3d
 	double		z;
 }				t_dot_3d;
 
-typedef struct	s_ray
+typedef struct	s_obj
+{
+	char		name[4];
+	t_dot_3d	pos;
+	t_dot_3d	vect;
+	double		siz;
+	int			col;
+}				t_obj;
+
+/*typedef struct	s_ray
 {
 	t_dot_3d	pos;
 	t_dot_3d	vect;
@@ -53,7 +62,7 @@ typedef struct	s_plane
 	t_dot_3d	vect;
 	int			col;
 }				t_plane;
-
+*/
 typedef struct	s_env
 {
 	void		*mlx;
@@ -67,10 +76,11 @@ typedef struct	s_env
 }				t_env;
 
 int				parser(char *arg, t_env *env);
-int				set_sph(int fd, t_env *env);
-int				set_cam(int fd, t_env *env);
+int				set_sph(int *fd, t_env *env);
+int				set_cam(int *fd, t_env *env);
 t_dot_3d		coor_parse(char **str, char *str2);
 int				color_parse(char **str);
 double			value_parse(char **str, char *str2);
 void			raycast(t_env env);
+t_dot_3d		collide_sph(t_obj r, t_obj s);
 #endif
