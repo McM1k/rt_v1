@@ -6,7 +6,7 @@
 /*   By: gboudrie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/13 17:56:13 by gboudrie          #+#    #+#             */
-/*   Updated: 2016/12/02 17:20:02 by gboudrie         ###   ########.fr       */
+/*   Updated: 2016/12/03 16:01:09 by gboudrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int			check_objects(t_obj r, t_env env)
 	int			col;
 
 	ptr = env.list;
-	col = 0;
+	col = 0x00FF00FF;
 	while (ptr)
 	{
 		if (ft_strcmp(((t_obj *)ptr->content)->name, "sph") == 0)

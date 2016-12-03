@@ -6,7 +6,7 @@
 /*   By: gboudrie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/04 16:45:26 by gboudrie          #+#    #+#             */
-/*   Updated: 2016/12/02 12:12:42 by gboudrie         ###   ########.fr       */
+/*   Updated: 2016/12/03 17:46:52 by gboudrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ double		value_parse(char **str, char *str2)
 	int			value;
 
 	value = 0;
-	if (ft_strcmp(str2, *str) == 0)
+	if (ft_strncmp(str2, *str, ft_strlen(str2)) == 0)
 		value = ft_atoi((*str) + ft_strlen(str2));
 	return ((double)value);
 }
@@ -29,15 +29,15 @@ int			color_parse(char **str)
 	char		**tab;
 	char		*tmp;
 
-	color = 0x00FFFFFF;
-	if (ft_strcmp("-colour[", *str) == 0)
+	color = 0;
+	if (ft_strncmp("-colour[", *str, 8) == 0)
 	{
 		if (!(tab = ft_strsplit((*str) + 8, ' ')))
 			return (0);
 		tmp = (char *)(&color);
-		*(tmp + 1) = ft_atoi(tab[0]);
-		*(tmp + 2) = ft_atoi(tab[1]);
-		*(tmp + 3) = ft_atoi(tab[2]);
+		color = 256 * 256 * ft_atoi(tab[0]);
+		color += 256 * ft_atoi(tab[1]);
+		color += ft_atoi(tab[2]);
 		ft_tabdel((void ***)&tab);
 	}
 	return (color);
@@ -51,7 +51,7 @@ t_dot_3d	coor_parse(char **str, char *str2)
 	dot.x = 0;
 	dot.y = 0;
 	dot.z = 0;
-	if (ft_strcmp(str2, *str) == 0)
+	if (ft_strncmp(str2, *str, ft_strlen(str2)) == 0)
 	{
 		if (!(tab = ft_strsplit((*str) + ft_strlen(str2), ' ')))
 			return (dot);
