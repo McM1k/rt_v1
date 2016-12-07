@@ -6,7 +6,7 @@
 /*   By: gboudrie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/04 16:45:26 by gboudrie          #+#    #+#             */
-/*   Updated: 2016/12/03 17:46:52 by gboudrie         ###   ########.fr       */
+/*   Updated: 2016/12/06 16:08:58 by gboudrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ double		value_parse(char **str, char *str2)
 	int			value;
 
 	value = 0;
-	if (ft_strncmp(str2, *str, ft_strlen(str2)) == 0)
+//	if (ft_strncmp(str2, *str, ft_strlen(str2)) == 0)
 		value = ft_atoi((*str) + ft_strlen(str2));
 	return ((double)value);
 }
@@ -30,16 +30,16 @@ int			color_parse(char **str)
 	char		*tmp;
 
 	color = 0;
-	if (ft_strncmp("-colour[", *str, 8) == 0)
-	{
-		if (!(tab = ft_strsplit((*str) + 8, ' ')))
-			return (0);
-		tmp = (char *)(&color);
-		color = 256 * 256 * ft_atoi(tab[0]);
-		color += 256 * ft_atoi(tab[1]);
-		color += ft_atoi(tab[2]);
-		ft_tabdel((void ***)&tab);
-	}
+//	if (ft_strncmp("-colour[", *str, 8) == 0)
+//	{
+	if (!(tab = ft_strsplit((*str) + 8, ' ')))
+		return (0);
+	tmp = (char *)(&color);
+	color = 256 * 256 * ft_atoi(tab[0]);
+	color += 256 * ft_atoi(tab[1]);
+	color += ft_atoi(tab[2]);
+	ft_tabdel((void ***)&tab);
+//	}
 	return (color);
 }
 
@@ -51,15 +51,15 @@ t_dot_3d	coor_parse(char **str, char *str2)
 	dot.x = 0;
 	dot.y = 0;
 	dot.z = 0;
-	if (ft_strncmp(str2, *str, ft_strlen(str2)) == 0)
-	{
-		if (!(tab = ft_strsplit((*str) + ft_strlen(str2), ' ')))
-			return (dot);
-		dot.x = (double)ft_atoi(tab[0]);
-		dot.y = (double)ft_atoi(tab[1]);
-		dot.z = (double)ft_atoi(tab[2]);
-		ft_tabdel((void ***)&tab);
-	}
+//	if (!(ft_strncmp(str2, *str, ft_strlen(str2))))
+//	{
+	if ((tab = ft_strsplit(*str + ft_strlen(str2), ' ')) == NULL)
+		return (dot);
+	dot.x = (double)ft_atoi(tab[0]);
+	dot.y = (double)ft_atoi(tab[1]);
+	dot.z = (double)ft_atoi(tab[2]);
+	ft_tabdel((void ***)&tab);
+//	}
 	return (dot);
 }
 

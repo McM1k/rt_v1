@@ -6,7 +6,7 @@
 /*   By: gboudrie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/04 15:38:33 by gboudrie          #+#    #+#             */
-/*   Updated: 2016/12/03 19:14:29 by gboudrie         ###   ########.fr       */
+/*   Updated: 2016/12/06 16:08:57 by gboudrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ int		main(int ac, char **av)
 		&& (parser(av[1], &env)))
 	{
 		raycast(env);
-		ft_putnbr(((t_obj *)env.list->content)->pos.x);
 		mlx_put_image_to_window(env.mlx, env.win, env.ig, 0, 0);
 //		mlx_hook(env.win, 2, 0, key_funct, &env);
 //		mlx_hook(env.win, 17, 0, destroy_funct, &env);

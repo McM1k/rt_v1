@@ -6,7 +6,7 @@
 /*   By: gboudrie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/23 10:46:17 by gboudrie          #+#    #+#             */
-/*   Updated: 2016/11/23 10:48:11 by gboudrie         ###   ########.fr       */
+/*   Updated: 2016/12/07 18:40:29 by gboudrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,25 @@ t_dot_3d	collide_sph(t_obj r, t_obj s)
 	res.x = (c < d ? r.pos.x + c * r.vect.x : r.pos.x + d * r.vect.x);
 	res.y = (c < d ? r.pos.y + c * r.vect.y : r.pos.y + d * r.vect.y);
 	res.z = (c < d ? r.pos.z + c * r.vect.z : r.pos.z + d * r.vect.z);
+	return (res);
+}
+
+t_dot_3d	collide_pln(t_obj r, t_obj p)
+{
+	double		t;
+	t_dot_3d	res;
+
+	res.x = 0;
+	res.y = 0;
+	res.z = 0;
+	if (!(p.vect.x * r.vect.x + p.vect.y * r.vect.y + p.vect.z * r.vect.z))
+		return (res);
+	t = p.vect.x * (p.pos.x - r.pos.x)
+		+ p.vect.y * (p.pos.y - r.pos.y)
+		+ p.vect.z * (p.pos.z - r.pos.z)
+		/ (p.vect.x * r.vect.x + p.vect.y * r.vect.y + p.vect.z * r.vect.z);
+	res.x = r.pos.x + r.vect.x * t;
+	res.y = r.pos.y + r.vect.y * t;
+	res.z = r.pos.z + r.vect.z * t;
 	return (res);
 }
