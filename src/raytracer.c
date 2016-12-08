@@ -6,7 +6,7 @@
 /*   By: gboudrie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/13 17:56:13 by gboudrie          #+#    #+#             */
-/*   Updated: 2016/12/03 16:01:09 by gboudrie         ###   ########.fr       */
+/*   Updated: 2016/12/08 15:31:10 by gboudrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int			check_objects(t_obj r, t_env env)
 	int			col;
 
 	ptr = env.list;
-	col = 0x00FF00FF;
+	col = 0;
 	while (ptr)
 	{
 		if (ft_strcmp(((t_obj *)ptr->content)->name, "sph") == 0)
@@ -45,14 +45,19 @@ int			rotate_ray(double x, double y, t_env env)
 {
 	t_obj	r;
 	int		col;
+	t_obj	cam;
 
 	x *= (PI / 3) / SIZE_X;
 	x -= (PI / 6);
 	y *= (PI * (SIZE_X / SIZE_Y) / 3) / SIZE_Y;
 	y -= (PI * (SIZE_X / SIZE_Y) / 6);
-	r.vect.x = ((t_obj *)env.list->content)->vect.x * (cos(y) + sin(y));
-	r.vect.y = ((t_obj *)env.list->content)->vect.y * (cos(x) - sin(x));
-	r.vect.z = ((t_obj *)env.list->content)->vect.z * (sin(x) + cos(x));
+	cam = *((t_obj *)env.list->content);
+	r.pos.x = cam.pos.x;
+	r.pos.y = cam.pos.y;
+	r.pos.z = cam.pos.z;
+	r.vect.x = cam.vect.x * (cos(y) + sin(y));
+	r.vect.y = cam.vect.y * (cos(x) - sin(x));
+	r.vect.z = cam.vect.z * (sin(x) + cos(x));
 	r.vect.z += r.vect.z * (cos(y) - sin(y));
 	col = check_objects(r, env);
 	return (col);
@@ -60,13 +65,9 @@ int			rotate_ray(double x, double y, t_env env)
 
 void		raycast(t_env env)
 {
-	double	add_y;
-	double	add_x;
 	double	x;
 	double	y;
 
-	add_x = (PI / 3) / SIZE_X;
-	add_y = (PI * (SIZE_X / SIZE_Y) / 3) / SIZE_Y;
 	x = 0;
 	while (x++ < SIZE_X)
 	{
