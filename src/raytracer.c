@@ -6,7 +6,7 @@
 /*   By: gboudrie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/13 17:56:13 by gboudrie          #+#    #+#             */
-/*   Updated: 2016/12/08 15:31:10 by gboudrie         ###   ########.fr       */
+/*   Updated: 2016/12/12 16:48:12 by gboudrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,8 @@ int			rotate_ray(double x, double y, t_env env)
 	r.pos.x = cam.pos.x;
 	r.pos.y = cam.pos.y;
 	r.pos.z = cam.pos.z;
-	r.vect.x = cam.vect.x * (cos(y) + sin(y));
-	r.vect.y = cam.vect.y * (cos(x) - sin(x));
-	r.vect.z = cam.vect.z * (sin(x) + cos(x));
-	r.vect.z += r.vect.z * (cos(y) - sin(y));
+	r.vect = rotate_vect_y(cam.vect, x);
+	r.vect = rotate_vect_z(r.vect, y);
 	col = check_objects(r, env);
 	return (col);
 }
