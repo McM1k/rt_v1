@@ -6,7 +6,7 @@
 /*   By: gboudrie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/13 17:56:13 by gboudrie          #+#    #+#             */
-/*   Updated: 2016/12/15 15:12:50 by gboudrie         ###   ########.fr       */
+/*   Updated: 2016/12/16 11:42:22 by gboudrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,12 @@ int			check_objects(t_obj r, t_env env)
 	col = 0;
 	while (ptr)
 	{
+		if (ft_strcmp(((t_obj *)ptr->content)->name, "pln") == 0)
+		{
+			dot = collide_pln(r, *((t_obj *)ptr->content));
+			if (dot.x != r.pos.x || dot.y != r.pos.y || dot.z != r.pos.z)
+				col = ((t_obj *)ptr->content)->col;
+		}
 		if (ft_strcmp(((t_obj *)ptr->content)->name, "sph") == 0)
 		{
 			dot = collide_sph(r, *((t_obj *)ptr->content));

@@ -6,7 +6,7 @@
 /*   By: gboudrie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/10 18:59:14 by gboudrie          #+#    #+#             */
-/*   Updated: 2016/12/06 16:08:36 by gboudrie         ###   ########.fr       */
+/*   Updated: 2016/12/16 13:45:47 by gboudrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,32 @@ int			set_sph(int *fd, t_env *env)
 		ft_strdel(&str);
 	}
 	if (!(new = ft_lstnew((void *)(&sph), sizeof(t_obj))))
+		return (0);
+	ft_lstaddq(&(env->list), new);
+	return (1);
+}
+
+int			set_pln(int *fd, t_env *env)
+{
+	t_list		*new;
+	t_obj		pln;
+	char		*str;
+
+	pln.name[0] = 'p';
+	pln.name[1] = 'l';
+	pln.name[2] = 'n';
+	pln.name[3] = '\0';
+	while ((get_next_line(*fd, &str)) > 0 && *str != '}')
+	{
+		if ((ft_strnequ("-position[", str, 10)))
+			pln.pos = coor_parse(&str, "-position[");
+		else if ((ft_strnequ("-vector[", str, 8)))
+			pln.vect = coor_parse(&str, "-vector[");
+		else if ((ft_strnequ("-colour[", str, 8)))
+			pln.col = color_parse(&str);
+		ft_strdel(&str);
+	}
+	if (!(new = ft_lstnew((void *)(&pln), sizeof(t_obj))))
 		return (0);
 	ft_lstaddq(&(env->list), new);
 	return (1);

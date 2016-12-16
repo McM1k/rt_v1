@@ -6,7 +6,7 @@
 /*   By: gboudrie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/23 10:46:17 by gboudrie          #+#    #+#             */
-/*   Updated: 2016/12/12 16:21:27 by gboudrie         ###   ########.fr       */
+/*   Updated: 2016/12/16 11:17:04 by gboudrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,14 @@ t_dot_3d	collide_sph(t_obj r, t_obj s)
 	t_dot_3d	res;
 
 //	printf("x = %lf, y = %lf, z = %lf\n",  r.vect.x, r.vect.y, r.vect.z);
-/*	ft_putstr("x = ");
-	ft_putnbr(r.vect.x);
-	ft_putstr(", y = ");
-	ft_putnbr(r.vect.y);
-	ft_putstr(", z = ");
-	ft_putnbr(r.vect.z);
-	ft_putendl("");
-*/	a = r.vect.x * r.vect.x + r.vect.y * r.vect.y + r.vect.z * r.vect.z;
+//	ft_putstr("x = ");
+//	ft_putnbr(r.vect.x);
+//	ft_putstr(", y = ");
+//	ft_putnbr(r.vect.y);
+//	ft_putstr(", z = ");
+//	ft_putnbr(r.vect.z);
+//	ft_putendl("");
+	a = r.vect.x * r.vect.x + r.vect.y * r.vect.y + r.vect.z * r.vect.z;
 	b = 2 * r.vect.x * (r.pos.x - s.pos.x) +
 		2 * r.vect.y * (r.pos.y - s.pos.y) +
 		2 * r.vect.z * (r.pos.z - s.pos.z);

@@ -6,7 +6,7 @@
 /*   By: gboudrie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/04 16:14:37 by gboudrie          #+#    #+#             */
-/*   Updated: 2016/12/12 12:01:07 by gboudrie         ###   ########.fr       */
+/*   Updated: 2016/12/16 13:44:36 by gboudrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,12 +77,14 @@ typedef struct	s_env
 
 int				parser(char *arg, t_env *env);
 int				set_sph(int *fd, t_env *env);
+int				set_pln(int *fd, t_env *env);
 int				set_cam(int *fd, t_env *env);
 t_dot_3d		coor_parse(char **str, char *str2);
 int				color_parse(char **str);
 double			value_parse(char **str, char *str2);
 void			raycast(t_env env);
 t_dot_3d		collide_sph(t_obj r, t_obj s);
+t_dot_3d		collide_pln(t_obj r, t_obj p);
 t_dot_3d		rotate_vect_x(t_dot_3d vect, double angle);
 t_dot_3d		rotate_vect_y(t_dot_3d vect, double angle);
 t_dot_3d		rotate_vect_z(t_dot_3d vect, double angle);

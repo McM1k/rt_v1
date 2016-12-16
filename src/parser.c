@@ -6,7 +6,7 @@
 /*   By: gboudrie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/04 16:45:26 by gboudrie          #+#    #+#             */
-/*   Updated: 2016/12/06 16:08:58 by gboudrie         ###   ########.fr       */
+/*   Updated: 2016/12/16 14:25:54 by gboudrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,11 @@ int			parser(char *arg, t_env *env)
 		else if (strcmp("sphere{", str) == 0)
 		{
 			if (!(set_sph(&fd, env)))
+				return (0);
+		}
+		else if (strcmp("plane{", str) == 0)
+		{
+			if (!(set_pln(&fd, env)))
 				return (0);
 		}
 		else
