@@ -6,7 +6,7 @@
 /*   By: gboudrie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/13 17:56:13 by gboudrie          #+#    #+#             */
-/*   Updated: 2016/12/16 11:42:22 by gboudrie         ###   ########.fr       */
+/*   Updated: 2016/12/20 17:13:30 by gboudrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,25 +22,26 @@ void		img_addr(t_env env, int x, int y, int color)
 int			check_objects(t_obj r, t_env env)
 {
 	t_list		*ptr;
-	t_dot_3d	dot;
+	double		param_tmp;
+	double		param;
 	int			col;
 
-	ptr = env.list;
 	col = 0;
+	ptr = env.list;
+	param = 2000000000;
 	while (ptr)
 	{
 		if (ft_strcmp(((t_obj *)ptr->content)->name, "pln") == 0)
 		{
-			dot = collide_pln(r, *((t_obj *)ptr->content));
-			if (dot.x != r.pos.x || dot.y != r.pos.y || dot.z != r.pos.z)
+			param_tmp = collide_pln(r, *((t_obj *)ptr->content));
+			if (param_tmp >= 0 && param_tmp < param && (param = param_tmp) >= 0)
 				col = ((t_obj *)ptr->content)->col;
 		}
-		if (ft_strcmp(((t_obj *)ptr->content)->name, "sph") == 0)
+		else if (ft_strcmp(((t_obj *)ptr->content)->name, "sph") == 0)
 		{
-			dot = collide_sph(r, *((t_obj *)ptr->content));
-			if (dot.x != r.pos.x || dot.y != r.pos.y || dot.z != r.pos.z)
+			param_tmp = collide_sph(r, *((t_obj *)ptr->content));
+			if (param_tmp >= 0 && param_tmp < param && (param = param_tmp) >= 0)
 				col = ((t_obj *)ptr->content)->col;
-// manque un test pour afficher la collision la plus proche et pas juste la derniere
 		}
 		ptr = ptr->next;
 	}

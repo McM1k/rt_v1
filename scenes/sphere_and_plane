@@ -1,0 +1,19 @@
+camera{
+-position[-100 0 0]
+-vector[1 0 0]
+}
+sphere{
+-position[0 0 -10]
+-size[30]
+-colour[255 255 0]
+}
+sphere{
+-position[0 10 0]
+-size[25]
+-colour[0 255 0]
+}
+plane{
+-position[0 0 -10]
+-vector[0 0 1]
+-colour[100 100 255]
+}

@@ -1,14 +1,9 @@
 camera{
--position[0 0 0]
+-position[-100 0 10]
 -vector[1 0 0]
 }
-plane{
--position[100 0 0]
--vector[1 1 1]
--colour[0 255 0]
-}
 sphere{
--position[100 0 0]
+-position[0 0 0]
 -size[30]
 -colour[255 0 0]
 }
