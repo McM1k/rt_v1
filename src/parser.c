@@ -6,7 +6,7 @@
 /*   By: gboudrie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/04 16:45:26 by gboudrie          #+#    #+#             */
-/*   Updated: 2016/12/16 14:25:54 by gboudrie         ###   ########.fr       */
+/*   Updated: 2016/12/21 16:52:35 by gboudrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,11 @@ int			parser(char *arg, t_env *env)
 		if (strcmp("camera{", str) == 0)
 		{
 			if (!(set_cam(&fd, env)))
+				return (0);
+		}
+		else if (strcmp("cylinder{", str) == 0)
+		{
+			if (!(set_cyl(&fd, env)))
 				return (0);
 		}
 		else if (strcmp("sphere{", str) == 0)

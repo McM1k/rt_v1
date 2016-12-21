@@ -17,3 +17,9 @@ plane{
 -vector[0 0 1]
 -colour[100 100 255]
 }
+cylinder{
+-position[0 0 0]
+-vector[0 1 -1]
+-size[7]
+-colour[50 50 0]
+}

@@ -6,7 +6,7 @@
 /*   By: gboudrie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/23 10:46:17 by gboudrie          #+#    #+#             */
-/*   Updated: 2016/12/20 18:00:55 by gboudrie         ###   ########.fr       */
+/*   Updated: 2016/12/21 16:36:12 by gboudrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,28 @@ double	collide_pln(t_obj r, t_obj p)
 		+ p.vect.z * (p.pos.z - r.pos.z)
 		/ (p.vect.x * r.vect.x + p.vect.y * r.vect.y + p.vect.z * r.vect.z);
 	return (t);
+}
+
+double	collide_cyl(t_obj r, t_obj o)
+{
+	double	a;
+	double	b;
+	double	c;
+	double	d;
+
+	r.pos.x -= o.pos.x;
+	r.pos.y -= o.pos.y;
+	r.pos.z -= o.pos.z;
+	r.vect.x -= o.vect.x;
+	r.vect.y -= o.vect.y;
+	r.vect.z -= o.vect.z;
+	a = r.vect.z * r.vect.z + r.vect.y * r.vect.y;
+	b = 2 * r.vect.z * r.pos.z + 2 * r.vect.y * r.pos.y;
+	c = r.pos.z * r.pos.z + r.pos.y * r.pos.y - o.siz * o.siz;
+	d = b * b - 4 * a * c;
+	if (d < 0)
+		return (-1);
+	c = (- b - sqrt(d)) / (2 * a);
+	d = (- b + sqrt(d)) / (2 * a);
+	return (c < d ? c : d);
 }
