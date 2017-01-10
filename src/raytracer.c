@@ -6,7 +6,7 @@
 /*   By: gboudrie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/13 17:56:13 by gboudrie          #+#    #+#             */
-/*   Updated: 2016/12/21 17:27:42 by gboudrie         ###   ########.fr       */
+/*   Updated: 2017/01/09 13:15:09 by gboudrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,12 @@ int			check_objects(t_obj r, t_env env)
 		else if (ft_strcmp(((t_obj *)ptr->content)->name, "cyl") == 0)
 		{
 			param_tmp = collide_cyl(r, *((t_obj *)ptr->content));
+			if (param_tmp > 0 && param_tmp < param && (param = param_tmp) > 0)
+				col = ((t_obj *)ptr->content)->col;
+		}
+		else if (ft_strcmp(((t_obj *)ptr->content)->name, "con") == 0)
+		{
+			param_tmp = collide_con(r, *((t_obj *)ptr->content));
 			if (param_tmp > 0 && param_tmp < param && (param = param_tmp) > 0)
 				col = ((t_obj *)ptr->content)->col;
 		}

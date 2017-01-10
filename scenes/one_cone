@@ -1,0 +1,16 @@
+camera{
+-position[-100 0 0]
+-vector[1 0 0]
+}
+cone{
+-position[0 0 0]
+-vector[0 1 1]
+-size[20]
+-colour[255 0 0]
+}
+cone{
+-position[0 0 0]
+-vector[0 1 -1]
+-size[20]
+-colour[255 255 0]
+}

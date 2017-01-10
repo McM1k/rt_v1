@@ -6,7 +6,7 @@
 /*   By: gboudrie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/10 18:59:14 by gboudrie          #+#    #+#             */
-/*   Updated: 2016/12/21 17:15:29 by gboudrie         ###   ########.fr       */
+/*   Updated: 2017/01/09 13:18:04 by gboudrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,34 @@ int			set_cyl(int *fd, t_env *env)
 		ft_strdel(&str);
 	}
 	if (!(new = ft_lstnew((void *)(&cyl), sizeof(t_obj))))
+		return (0);
+	ft_lstaddq(&(env->list), new);
+	return (1);
+}
+
+int			set_con(int *fd, t_env *env)
+{
+	t_list		*new;
+	t_obj		con;
+	char		*str;
+
+	con.name[0] = 'c';
+	con.name[1] = 'o';
+	con.name[2] = 'n';
+	con.name[3] = '\0';
+	while ((get_next_line(*fd, &str)) > 0 && *str != '}')
+	{
+		if ((ft_strnequ("-position[", str, 10)))
+			con.pos = coor_parse(&str, "-position[");
+		else if ((ft_strnequ("-vector[", str, 8)))
+			con.vect = coor_parse(&str, "-vector[");
+		else if ((ft_strnequ("-size[", str, 6)))
+			con.siz = value_parse(&str, "-size[");
+		else if ((ft_strnequ("-colour[", str, 8)))
+			con.col = color_parse(&str);
+		ft_strdel(&str);
+	}
+	if (!(new = ft_lstnew((void *)(&con), sizeof(t_obj))))
 		return (0);
 	ft_lstaddq(&(env->list), new);
 	return (1);
