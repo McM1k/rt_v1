@@ -6,7 +6,7 @@
 /*   By: gboudrie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/04 16:14:37 by gboudrie          #+#    #+#             */
-/*   Updated: 2017/01/10 11:21:53 by gboudrie         ###   ########.fr       */
+/*   Updated: 2017/01/12 16:05:11 by gboudrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 # include "mlx.h"
 # include "../libft/libft.h"
 # define SIZE_X 1000
-# define SIZE_Y 1000
+# define SIZE_Y 500
 # define PI 3.14159265358979323846
 
 typedef struct	s_dot_3d
