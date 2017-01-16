@@ -6,7 +6,7 @@
 #    By: gboudrie <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/06/08 21:26:14 by gboudrie          #+#    #+#              #
-#    Updated: 2016/11/21 17:12:25 by gboudrie         ###   ########.fr        #
+#    Updated: 2016/12/16 15:49:23 by gboudrie         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 NAME = rtv1
@@ -21,7 +21,12 @@ HEADER = src/rtv1.h
 
 FLAGS = -Wall -Wextra -Werror
 
-SOURCES = src/main.c src/parser.c src/raytracer.c src/set_structs.c
+SOURCES = src/main.c \
+			src/parser.c \
+			src/raytracer.c \
+			src/set_structs.c \
+			src/collide.c \
+			src/rotation.c \
 
 OBJS = $(SOURCES:.c=.o)
 
@@ -31,7 +36,7 @@ all :			$(NAME)
 
 $(NAME) :		$(OBJS) $(HEADER) Makefile
 				$(MKLIB)
-				$(CC) $(FLAGS) -c src/$(SOURCES)
+				$(CC) $(FLAGS) -c $(SOURCES)
 				$(CC) $(FLAGS) -o $(NAME) $(OBJS) $(INCLUDES) $(MLX)
 
 
