@@ -6,7 +6,7 @@
 /*   By: gboudrie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/13 17:56:13 by gboudrie          #+#    #+#             */
-/*   Updated: 2017/01/09 13:15:09 by gboudrie         ###   ########.fr       */
+/*   Updated: 2017/01/19 16:34:42 by gboudrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,11 @@ int			rotate_ray(double x, double y, t_env env)
 	int		col;
 	t_obj	cam;
 
+	cam = *((t_obj *)env.list->content);
 	x *= (PI / 3) / SIZE_X;
 	x -= (PI / 6);
 	y *= (PI * (SIZE_X / SIZE_Y) / 3) / SIZE_Y;
 	y -= (PI * (SIZE_X / SIZE_Y) / 6);
-	cam = *((t_obj *)env.list->content);
 	r.pos.x = cam.pos.x;
 	r.pos.y = cam.pos.y;
 	r.pos.z = cam.pos.z;
