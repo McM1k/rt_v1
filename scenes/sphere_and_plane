@@ -1,25 +1,35 @@
 camera{
--position[-100 0 0]
+-position[-300 0 0]
 -vector[1 0 0]
 }
 sphere{
--position[0 0 -10]
+-position[100 -20 -10]
 -size[30]
--colour[255 255 0]
+-colour[180 100 50]
 }
 sphere{
--position[0 10 0]
--size[25]
--colour[0 255 0]
+-position[100 20 20]
+-size[20]
+-colour[170 200 70]
 }
 plane{
--position[0 0 -10]
--vector[0 0 1]
--colour[100 100 255]
+-position[100 -10 -10]
+-vector[-3 -2 10]
+-colour[100 170 255]
+}
+plane{
+-position[100 -50 -50]
+-vector[10 12 -15]
+-colour[100 170 0]
+}
+plane{
+-position[100 40 -20]
+-vector[12 0 4]
+-colour[0 170 100]
 }
 cylinder{
--position[0 0 0]
--vector[0 1 -1]
--size[7]
--colour[50 50 0]
+-position[80 -5 0]
+-vector[0 1 1]
+-size[8]
+-colour[100 50 0]
 }
