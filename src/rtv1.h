@@ -6,7 +6,7 @@
 /*   By: gboudrie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/04 16:14:37 by gboudrie          #+#    #+#             */
-/*   Updated: 2017/02/04 13:11:59 by gboudrie         ###   ########.fr       */
+/*   Updated: 2017/02/06 17:34:49 by gboudrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ double			value_parse(char **str, char *str2);
 void			raycast(t_env env);
 double			collide_sph(t_obj r, t_obj o);
 double			collide_pln(t_obj r, t_obj o);
-double			collide_cyl(t_obj r, t_obj o);
-double			collide_con(t_obj r, t_obj o);
+double			collide_cyl(t_obj r, t_obj o, t_obj cam);
+double			collide_con(t_obj r, t_obj o, t_obj cam);
 t_dot_3d		rotate_vect_x(t_dot_3d vect, double angle);
 t_dot_3d		rotate_vect_y(t_dot_3d vect, double angle);
 t_dot_3d		rotate_vect_z(t_dot_3d vect, double angle);

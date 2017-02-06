@@ -6,7 +6,7 @@
 /*   By: gboudrie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/23 10:46:17 by gboudrie          #+#    #+#             */
-/*   Updated: 2017/02/06 14:29:57 by gboudrie         ###   ########.fr       */
+/*   Updated: 2017/02/06 17:35:17 by gboudrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,17 +51,17 @@ double	collide_pln(t_obj r, t_obj o)
 	return (t);
 }
 
-double	collide_cyl(t_obj r, t_obj o)
+double	collide_cyl(t_obj r, t_obj o, t_obj cam)
 {
 	double		a;
 	double		b;
 	double		c;
 	double		d;
-//	t_dot_3d	z;
+	t_dot_3d	z;
 
-//	z = set_vect(0.0, 0.0, 1.0);
+	z = set_vect(0.0, 0.0, 1.0);
 	r.pos = vect_3d_sub(r.pos, o.pos);
-//	r.vect = rotate_vect_axis(r.vect, o.vect, ang_vect(z, o.vect));
+	r.vect = rotate_vect_axis(cam.vect, r.vect, ang_vect(z, o.vect));
 	a = r.vect.x * r.vect.x + r.vect.y * r.vect.y;
 	b = 2 * r.vect.x * r.pos.x + 2 * r.vect.y * r.pos.y;
 	c = r.pos.x * r.pos.x + r.pos.y * r.pos.y - o.siz * o.siz;
@@ -73,19 +73,17 @@ double	collide_cyl(t_obj r, t_obj o)
 	return (c < d ? c : d);
 }
 
-double	collide_con(t_obj r, t_obj o)
+double	collide_con(t_obj r, t_obj o, t_obj cam)
 {
-	double	a;
-	double	b;
-	double	c;
-	double	d;
+	double		a;
+	double		b;
+	double		c;
+	double		d;
+	t_dot_3d	z;
 
-	r.pos.x -= o.pos.x;
-	r.pos.y -= o.pos.y;
-	r.pos.z -= o.pos.z;
-	r.vect.x -= o.vect.x;
-	r.vect.y -= o.vect.y;
-	r.vect.z -= o.vect.z;
+	z = set_vect(0.0, 0.0, 1.0);
+	r.pos = vect_3d_sub(r.pos, o.pos);
+	r.vect = rotate_vect_axis(cam.vect, r.vect, ang_vect(z, o.vect));
 	a = r.vect.x * r.vect.x + r.vect.y * r.vect.y - r.vect.z * r.vect.z;
 	b = 2 * r.vect.x * r.pos.x + 2 * r.vect.y * r.pos.y -
 		2 * r.vect.z * r.vect.z;

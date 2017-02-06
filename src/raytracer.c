@@ -6,7 +6,7 @@
 /*   By: gboudrie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/13 17:56:13 by gboudrie          #+#    #+#             */
-/*   Updated: 2017/02/06 10:24:16 by gboudrie         ###   ########.fr       */
+/*   Updated: 2017/02/06 17:33:39 by gboudrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void		img_addr(t_env env, int x, int y, int color)
 		ft_memcpy(&env.img[(x - 1) * 4 + (y - 1) * env.siz], &color, 4);
 }
 
-int			check_objects(t_obj r, t_env env)
+int			check_objects(t_obj r, t_env env, t_obj cam)
 {
 	t_list		*ptr;
 	double		param_tmp;
@@ -45,13 +45,13 @@ int			check_objects(t_obj r, t_env env)
 		}
 		else if (ft_strcmp(((t_obj *)ptr->content)->name, "cyl") == 0)
 		{
-			param_tmp = collide_cyl(r, *((t_obj *)ptr->content));
+			param_tmp = collide_cyl(r, *((t_obj *)ptr->content), cam);
 			if (param_tmp > 0 && param_tmp < param && (param = param_tmp) > 0)
 				col = ((t_obj *)ptr->content)->col;
 		}
 		else if (ft_strcmp(((t_obj *)ptr->content)->name, "con") == 0)
 		{
-			param_tmp = collide_con(r, *((t_obj *)ptr->content));
+			param_tmp = collide_con(r, *((t_obj *)ptr->content), cam);
 			if (param_tmp > 0 && param_tmp < param && (param = param_tmp) > 0)
 				col = ((t_obj *)ptr->content)->col;
 		}
@@ -89,7 +89,7 @@ int			rotate_ray(double x, double y, t_env env, t_dot_3d *tab)
 	r.vect = rotate_vect_y(cam.vect, y);
 	r.vect = rotate_vect_z(r.vect, x);
 */
-	col = check_objects(r, env);
+	col = check_objects(r, env, cam);
 	return (col);
 }
 
