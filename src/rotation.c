@@ -6,7 +6,7 @@
 /*   By: gboudrie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/12 11:04:01 by gboudrie          #+#    #+#             */
-/*   Updated: 2017/01/19 16:37:24 by gboudrie         ###   ########.fr       */
+/*   Updated: 2017/02/03 14:34:56 by gboudrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,19 @@ t_dot_3d	rotate_vect_z(t_dot_3d vect, double angle)
 	return (res);
 }
 
-double			dot_prod(t_dot_3d u, t_dot_3d v)
+t_dot_3d	rotate_vect_axis(t_dot_3d ax, t_dot_3d u, double an)
 {
-	return((u.x + v.x) * (u.y + v.y) * (u.z * v.z));
-}
+	t_dot_3d	tmp;
 
-double			ang_vect(t_dot_3d u, t_dot_3d v)
-{
-	return(acos(dot_prod(u, v) / (sqrt(u.x * u.x + u.y * u.y + u.z * u.z)
-								  * sqrt(v.x * v.x + v.y * v.y + v.z * v.z))));
+	tmp = ax;
+	ax.x = u.x * (cos(an) + (tmp.x * tmp.x) * (1 - cos(an))) +
+		u.y * (tmp.x * tmp.y * (1 - cos(an)) - tmp.z * sin(an)) +
+		u.z * (tmp.x * tmp.z * (1 - cos(an)) + tmp.y * sin(an));
+	ax.y = u.x * (tmp.y * tmp.x * (1 - cos(an)) + tmp.z * sin(an)) +
+		u.y * (cos(an) + (tmp.y * tmp.y) * (1 - cos(an))) +
+		u.z * (tmp.y * tmp.z * (1 - cos(an)) - tmp.x * sin(an));
+	ax.z = u.x * (tmp.z * tmp.x * (1 - cos(an)) - tmp.y * sin(an)) +
+		u.y * (tmp.z * tmp.y * (1 - cos(an)) + tmp.x * sin(an)) +
+		u.z * (cos(an) + (tmp.z * tmp.z) * (1 - cos(an)));
+	return (ax);
 }

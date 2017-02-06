@@ -6,7 +6,7 @@
 /*   By: gboudrie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/04 16:14:37 by gboudrie          #+#    #+#             */
-/*   Updated: 2017/01/12 16:05:11 by gboudrie         ###   ########.fr       */
+/*   Updated: 2017/02/04 13:11:59 by gboudrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,13 @@
 # include "mlx.h"
 # include "../libft/libft.h"
 # define SIZE_X 1000
-# define SIZE_Y 500
+# define SIZE_Y 1000
 # define PI 3.14159265358979323846
-
+# define FWD tab[2]
+# define UP tab[1]
+# define RGHT tab[0]
+# define CAMD tab[3]
+# define LFTUP tab[4]
 typedef struct	s_dot_3d
 {
 	double		x;
@@ -63,4 +67,14 @@ double			collide_con(t_obj r, t_obj o);
 t_dot_3d		rotate_vect_x(t_dot_3d vect, double angle);
 t_dot_3d		rotate_vect_y(t_dot_3d vect, double angle);
 t_dot_3d		rotate_vect_z(t_dot_3d vect, double angle);
+t_dot_3d		rotate_vect_axis(t_dot_3d ax, t_dot_3d u, double an);
+double			dot_prod(t_dot_3d u, t_dot_3d v);
+double			ang_vect(t_dot_3d u, t_dot_3d v);
+t_dot_3d		vect_3d_add(t_dot_3d u, t_dot_3d v);
+t_dot_3d		vect_3d_sub(t_dot_3d u, t_dot_3d v);
+t_dot_3d		vect_3d_mul(t_dot_3d u, double t);
+t_dot_3d		vect_3d_div(t_dot_3d u, double t);
+t_dot_3d		set_vect(double x, double y, double z);
+t_dot_3d		vect_3d_uni(t_dot_3d u);
+t_dot_3d		vect_3d_prod(t_dot_3d u, t_dot_3d v);
 #endif

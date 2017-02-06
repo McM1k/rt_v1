@@ -6,7 +6,7 @@
 #    By: gboudrie <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/06/08 21:26:14 by gboudrie          #+#    #+#              #
-#    Updated: 2016/12/16 15:49:23 by gboudrie         ###   ########.fr        #
+#    Updated: 2017/02/03 14:14:17 by gboudrie         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 NAME = rtv1
@@ -19,7 +19,7 @@ CC = gcc
 
 HEADER = src/rtv1.h
 
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror -Ofast
 
 SOURCES = src/main.c \
 			src/parser.c \
@@ -27,6 +27,8 @@ SOURCES = src/main.c \
 			src/set_structs.c \
 			src/collide.c \
 			src/rotation.c \
+			src/vectors.c \
+			src/vectors2.c \
 
 OBJS = $(SOURCES:.c=.o)
 

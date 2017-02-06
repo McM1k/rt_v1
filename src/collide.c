@@ -6,12 +6,13 @@
 /*   By: gboudrie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/23 10:46:17 by gboudrie          #+#    #+#             */
-/*   Updated: 2017/01/19 17:40:08 by gboudrie         ###   ########.fr       */
+/*   Updated: 2017/02/06 14:29:57 by gboudrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtv1.h"
 #include <math.h>
+#include <stdio.h>
 
 double	collide_sph(t_obj r, t_obj o)
 {
@@ -39,29 +40,28 @@ double	collide_sph(t_obj r, t_obj o)
 double	collide_pln(t_obj r, t_obj o)
 {
 	double		t;
+	t_dot_3d	u;
 
-	if (!(o.vect.x * r.vect.x + o.vect.y * r.vect.y + o.vect.z * r.vect.z))
+	if (dot_prod(o.vect, r.vect) == 0)
 		return (-1);
-	t = o.vect.x * (o.pos.x - r.pos.x)
-		+ o.vect.y * (o.pos.y - r.pos.y)
-		+ o.vect.z * (o.pos.z - r.pos.z)
-		/ (o.vect.x * r.vect.x + o.vect.y * r.vect.y + o.vect.z * r.vect.z);
+	u.x = o.pos.x - r.pos.x;
+	u.y = o.pos.y - r.pos.y;
+	u.z = o.pos.z - r.pos.z;
+	t = dot_prod(o.vect, u) / dot_prod(o.vect, r.vect);
 	return (t);
 }
 
 double	collide_cyl(t_obj r, t_obj o)
 {
-	double	a;
-	double	b;
-	double	c;
-	double	d;
+	double		a;
+	double		b;
+	double		c;
+	double		d;
+//	t_dot_3d	z;
 
-	r.pos.x -= o.pos.x;
-	r.pos.y -= o.pos.y;
-	r.pos.z -= o.pos.z;
-	r.vect.x -= o.vect.x;
-	r.vect.y -= o.vect.y;
-	r.vect.z -= o.vect.z;
+//	z = set_vect(0.0, 0.0, 1.0);
+	r.pos = vect_3d_sub(r.pos, o.pos);
+//	r.vect = rotate_vect_axis(r.vect, o.vect, ang_vect(z, o.vect));
 	a = r.vect.x * r.vect.x + r.vect.y * r.vect.y;
 	b = 2 * r.vect.x * r.pos.x + 2 * r.vect.y * r.pos.y;
 	c = r.pos.x * r.pos.x + r.pos.y * r.pos.y - o.siz * o.siz;
