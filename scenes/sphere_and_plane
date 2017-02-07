@@ -33,3 +33,8 @@ cylinder{
 -size[8]
 -colour[100 50 0]
 }
+cone{
+-position[90 -40 0]
+-vector[-1 1 3]
+-colour[50 50 50]
+}

@@ -6,7 +6,7 @@
 /*   By: gboudrie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/23 10:46:17 by gboudrie          #+#    #+#             */
-/*   Updated: 2017/02/06 17:35:17 by gboudrie         ###   ########.fr       */
+/*   Updated: 2017/02/07 11:53:19 by gboudrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ double	collide_con(t_obj r, t_obj o, t_obj cam)
 	b = 2 * r.vect.x * r.pos.x + 2 * r.vect.y * r.pos.y -
 		2 * r.vect.z * r.vect.z;
 	c = r.pos.x * r.pos.x + r.pos.y * r.pos.y -
-		r.pos.z * r.pos.z * o.siz * o.siz;
+		r.pos.z * r.pos.z;
 	d = b * b - 4 * a * c;
 	if (d < 0)
 		return (-1);
