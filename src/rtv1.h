@@ -6,7 +6,7 @@
 /*   By: gboudrie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/04 16:14:37 by gboudrie          #+#    #+#             */
-/*   Updated: 2017/02/06 17:34:49 by gboudrie         ###   ########.fr       */
+/*   Updated: 2017/02/15 18:30:50 by gboudrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ typedef struct	s_dot_3d
 
 typedef struct	s_obj
 {
-	char		name[4];
+	int			type;
 	t_dot_3d	pos;
 	t_dot_3d	vect;
 	double		siz;
@@ -47,8 +47,12 @@ typedef struct	s_env
 	int			siz;
 	int			bit;
 	int			ed;
-	t_list		*list;
+	t_obj		cam;
+	t_list		*obj_lst;
+	t_list		*spot_lst;
 }				t_env;
+
+typedef double	(*t_func)(t_obj, t_obj, t_obj);
 
 int				parser(char *arg, t_env *env);
 int				set_con(int *fd, t_env *env);
@@ -56,14 +60,19 @@ int				set_cyl(int *fd, t_env *env);
 int				set_pln(int *fd, t_env *env);
 int				set_sph(int *fd, t_env *env);
 int				set_cam(int *fd, t_env *env);
+int				set_spt(int *fd, t_env *env);
 t_dot_3d		coor_parse(char **str, char *str2);
 int				color_parse(char **str);
 double			value_parse(char **str, char *str2);
 void			raycast(t_env env);
-double			collide_sph(t_obj r, t_obj o);
-double			collide_pln(t_obj r, t_obj o);
+double			collide_sph(t_obj r, t_obj o, t_obj cam);
+double			collide_pln(t_obj r, t_obj o, t_obj cam);
 double			collide_cyl(t_obj r, t_obj o, t_obj cam);
 double			collide_con(t_obj r, t_obj o, t_obj cam);
+t_dot_3d		norm_sph(t_obj quad, t_dot_3d coll);
+t_dot_3d		norm_pln(t_obj quad, t_dot_3d coll);
+t_dot_3d		norm_cyl(t_obj quad, t_dot_3d coll);
+t_dot_3d		norm_con(t_obj quad, t_dot_3d coll);
 t_dot_3d		rotate_vect_x(t_dot_3d vect, double angle);
 t_dot_3d		rotate_vect_y(t_dot_3d vect, double angle);
 t_dot_3d		rotate_vect_z(t_dot_3d vect, double angle);
@@ -77,4 +86,5 @@ t_dot_3d		vect_3d_div(t_dot_3d u, double t);
 t_dot_3d		set_vect(double x, double y, double z);
 t_dot_3d		vect_3d_uni(t_dot_3d u);
 t_dot_3d		vect_3d_prod(t_dot_3d u, t_dot_3d v);
+int				shadow(int col, int percent);
 #endif

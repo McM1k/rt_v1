@@ -6,12 +6,13 @@
 /*   By: gboudrie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/13 17:56:13 by gboudrie          #+#    #+#             */
-/*   Updated: 2017/02/06 17:33:39 by gboudrie         ###   ########.fr       */
+/*   Updated: 2017/02/14 11:50:40 by gboudrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtv1.h"
 #include <math.h>
+#include <stdio.h>
 
 void		img_addr(t_env env, int x, int y, int color)
 {
@@ -19,77 +20,65 @@ void		img_addr(t_env env, int x, int y, int color)
 		ft_memcpy(&env.img[(x - 1) * 4 + (y - 1) * env.siz], &color, 4);
 }
 
-int			check_objects(t_obj r, t_env env, t_obj cam)
+t_obj		*check_objects(t_obj r, t_env env, t_obj *cam, double param)
 {
 	t_list		*ptr;
 	double		param_tmp;
-	double		param;
-	int			col;
+	t_obj		*quad;
+	t_func		func[4];
 
-	col = 0;
-	ptr = env.list;
-	param = 200000000;
+	quad = NULL;
+	ptr = env.obj_lst;
+	func[0] = collide_sph;
+	func[1] = collide_pln;
+	func[2] = collide_cyl;
+	func[3] = collide_con;
 	while (ptr)
 	{
-		if (ft_strcmp(((t_obj *)ptr->content)->name, "pln") == 0)
-		{
-			param_tmp = collide_pln(r, *((t_obj *)ptr->content));
-			if (param_tmp > 0 && param_tmp < param && (param = param_tmp) > 0)
-				col = ((t_obj *)ptr->content)->col;
-		}
-		else if (ft_strcmp(((t_obj *)ptr->content)->name, "sph") == 0)
-		{
-			param_tmp = collide_sph(r, *((t_obj *)ptr->content));
-			if (param_tmp > 0 && param_tmp < param && (param = param_tmp) > 0)
-				col = ((t_obj *)ptr->content)->col;
-		}
-		else if (ft_strcmp(((t_obj *)ptr->content)->name, "cyl") == 0)
-		{
-			param_tmp = collide_cyl(r, *((t_obj *)ptr->content), cam);
-			if (param_tmp > 0 && param_tmp < param && (param = param_tmp) > 0)
-				col = ((t_obj *)ptr->content)->col;
-		}
-		else if (ft_strcmp(((t_obj *)ptr->content)->name, "con") == 0)
-		{
-			param_tmp = collide_con(r, *((t_obj *)ptr->content), cam);
-			if (param_tmp > 0 && param_tmp < param && (param = param_tmp) > 0)
-				col = ((t_obj *)ptr->content)->col;
-		}
+		param_tmp = func[((t_obj *)ptr->content)->
+						 type](r,*((t_obj *)ptr->content), *cam);
+		if (param_tmp > 0 && param_tmp < param && (param = param_tmp) > 0)
+			quad = (t_obj *)(ptr->content);
 		ptr = ptr->next;
 	}
-	return (col);
+	cam->pos.x = r.pos.x + 0.0 + r.vect.x * param;
+	cam->pos.y = r.pos.y + 0.0 + r.vect.y * param;
+	cam->pos.z = r.pos.z + 0.0 + r.vect.z * param;
+	return (quad);
 }
 
 int			rotate_ray(double x, double y, t_env env, t_dot_3d *tab)
 {
 	t_obj		r;
 	int			col;
+	t_obj		cam2;
+	t_list		*ptr;
 	t_obj		cam;
 
-	cam = *((t_obj *)env.list->content);
-	r.pos = cam.pos;
+	cam2 = env.cam;
+	cam = env.cam;
+	r.pos = cam2.pos;
 	r.vect = vect_3d_add(LFTUP, vect_3d_mul(RGHT, y * 0.5 / (double)SIZE_Y));
 	r.vect = vect_3d_sub(r.vect, vect_3d_mul(UP, x * 0.5 / (double)SIZE_X));
-/*	r.pos = cam.pos;
-	r.vect.z = (SIZE_X + SIZE_Y) / 2;
-	r.vect.y = -(SIZE_Y / 2) + x;
-	r.vect.x = -(SIZE_X / 2) + y;
-	rot = angs_vect(r.vect);
-	r.vect = rotate_vect_x(cam.vect, rot.x);
-	r.vect = rotate_vect_y(r.vect, rot.y);
-	r.vect = rotate_vect_z(r.vect, rot.z);
-*/
-/*	x *= (PI / 3) / SIZE_X;
-	x -= (PI / 6);
-	y *= (PI / 3) / SIZE_Y;
-	y -= (PI / 6);
-	r.pos.x = cam.pos.x;
-	r.pos.y = cam.pos.y;
-	r.pos.z = cam.pos.z;
-	r.vect = rotate_vect_y(cam.vect, y);
-	r.vect = rotate_vect_z(r.vect, x);
-*/
-	col = check_objects(r, env, cam);
+	r.vect = vect_3d_uni(r.vect);
+	col = check_objects(r, env, &cam2, 20000000);
+	ptr = env.spot_lst;
+	while (ptr)
+	{
+		cam2.vect.x = ((t_obj *)ptr->content)->pos.x - cam2.pos.x;
+		cam2.vect.y = ((t_obj *)ptr->content)->pos.y - cam2.pos.y;
+		cam2.vect.z = ((t_obj *)ptr->content)->pos.z - cam2.pos.z;
+		cam2.pos.x = cam2.pos.x + cam2.vect.x * 0.01;
+		cam2.pos.y = cam2.pos.y + cam2.vect.y * 0.01;
+		cam2.pos.z = cam2.pos.z + cam2.vect.z * 0.01;
+		if (check_objects(cam2, env, &cam, 1.0) != 0)
+			col = shadow(col, 50);
+		else
+		{
+			
+			
+		ptr = ptr->next;
+	}
 	return (col);
 }
 
@@ -101,7 +90,7 @@ void		raycast(t_env env)
 	t_dot_3d    orth;
 	double      an;
 
-	CAMD = (*((t_obj *)env.list->content)).vect;
+	CAMD = env.cam.vect;
 	RGHT = set_vect(1.0, 0.0, 0.0);
 	UP = set_vect(0.0, 1.0, 0.0);
 	FWD = set_vect(0.0, 0.0, 1.0);
@@ -116,11 +105,17 @@ void		raycast(t_env env)
 	LFTUP = vect_3d_add(LFTUP, vect_3d_mul(CAMD, 1.0));
 	LFTUP = vect_3d_add(LFTUP, vect_3d_mul(UP, 0.25));
 	LFTUP = vect_3d_sub(LFTUP, vect_3d_mul(RGHT, 0.25));
-	x = 0;
+	/**/	x = 0;
 	while (x++ < SIZE_X)
 	{
 		y = 0;
 		while (y++ < SIZE_Y)
 			img_addr(env, x, y, rotate_ray(x, y, env, tab));
 	}
+	/**/
+/*
+	x = 250;
+	y = 315;
+	img_addr(env, x, y, rotate_ray(x, y, env, tab));
+*/
 }

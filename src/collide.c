@@ -6,7 +6,7 @@
 /*   By: gboudrie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/23 10:46:17 by gboudrie          #+#    #+#             */
-/*   Updated: 2017/02/07 11:53:19 by gboudrie         ###   ########.fr       */
+/*   Updated: 2017/02/11 17:33:48 by gboudrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <math.h>
 #include <stdio.h>
 
-double	collide_sph(t_obj r, t_obj o)
+double	collide_sph(t_obj r, t_obj o, t_obj cam)
 {
 	double		a;
 	double		b;
@@ -34,10 +34,11 @@ double	collide_sph(t_obj r, t_obj o)
 		return (-1);
 	c = (- b - sqrt(d)) / (2 * a);
 	d = (- b + sqrt(d)) / (2 * a);
-	return (c < d ? c : d);
+	return (c > 0 ? c : d);
+	cam.pos.x += 1 - 1;
 }
 
-double	collide_pln(t_obj r, t_obj o)
+double	collide_pln(t_obj r, t_obj o, t_obj cam)
 {
 	double		t;
 	t_dot_3d	u;
@@ -49,6 +50,7 @@ double	collide_pln(t_obj r, t_obj o)
 	u.z = o.pos.z - r.pos.z;
 	t = dot_prod(o.vect, u) / dot_prod(o.vect, r.vect);
 	return (t);
+	cam.pos.x += 1 - 1;
 }
 
 double	collide_cyl(t_obj r, t_obj o, t_obj cam)
@@ -61,7 +63,8 @@ double	collide_cyl(t_obj r, t_obj o, t_obj cam)
 
 	z = set_vect(0.0, 0.0, 1.0);
 	r.pos = vect_3d_sub(r.pos, o.pos);
-	r.vect = rotate_vect_axis(cam.vect, r.vect, ang_vect(z, o.vect));
+	r.vect = rotate_vect_axis(cam.vect, r.vect, ang_vect(o.vect, z));
+	r.pos = rotate_vect_axis(cam.vect, r.pos, ang_vect(o.vect, z));
 	a = r.vect.x * r.vect.x + r.vect.y * r.vect.y;
 	b = 2 * r.vect.x * r.pos.x + 2 * r.vect.y * r.pos.y;
 	c = r.pos.x * r.pos.x + r.pos.y * r.pos.y - o.siz * o.siz;
@@ -70,7 +73,7 @@ double	collide_cyl(t_obj r, t_obj o, t_obj cam)
 		return (-1);
 	c = (- b - sqrt(d)) / (2 * a);
 	d = (- b + sqrt(d)) / (2 * a);
-	return (c < d ? c : d);
+	return (c > 0 ? c : d);
 }
 
 double	collide_con(t_obj r, t_obj o, t_obj cam)
@@ -83,16 +86,18 @@ double	collide_con(t_obj r, t_obj o, t_obj cam)
 
 	z = set_vect(0.0, 0.0, 1.0);
 	r.pos = vect_3d_sub(r.pos, o.pos);
-	r.vect = rotate_vect_axis(cam.vect, r.vect, ang_vect(z, o.vect));
-	a = r.vect.x * r.vect.x + r.vect.y * r.vect.y - r.vect.z * r.vect.z;
-	b = 2 * r.vect.x * r.pos.x + 2 * r.vect.y * r.pos.y -
-		2 * r.vect.z * r.vect.z;
-	c = r.pos.x * r.pos.x + r.pos.y * r.pos.y -
-		r.pos.z * r.pos.z;
+	r.vect = rotate_vect_axis(cam.vect, r.vect, ang_vect(o.vect, z));
+	r.pos = rotate_vect_axis(cam.vect, r.pos, ang_vect(o.vect, z));
+	a = r.vect.x * r.vect.x + r.vect.y * r.vect.y - r.vect.z * r.vect.z
+		* tan(o.siz * (PI / 180));
+	b = 2 * r.vect.x * r.pos.x + 2 * r.vect.y * r.pos.y - 2 *
+		r.vect.z * r.pos.z * tan(o.siz * (PI / 180));
+	c = r.pos.x * r.pos.x + r.pos.y * r.pos.y + r.pos.z * r.pos.z
+		* tan(o.siz * (PI / 180));
 	d = b * b - 4 * a * c;
 	if (d < 0)
 		return (-1);
 	c = (- b - sqrt(d)) / (2 * a);
 	d = (- b + sqrt(d)) / (2 * a);
-	return (c < d ? c : d);
+	return (c > 0 ? c : d);
 }
